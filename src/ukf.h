@@ -12,6 +12,8 @@ using Eigen::VectorXd;
 
 class UKF {
 public:
+  // previous timestamp
+  long long previous_timestamp_;
 
   ///* initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -53,9 +55,9 @@ public:
   double std_radphi_;
 
   ///* Radar measurement noise standard deviation radius change in m/s
-  double std_radrd_ ;
+  double std_radrd_;
 
-  ///* Weights of sigma points
+  // Weights of sigma points
   VectorXd weights_;
 
   ///* State dimension
@@ -64,9 +66,26 @@ public:
   ///* Augmented state dimension
   int n_aug_;
 
+  ///* Radar Measuemrnt dimension
+  int n_z_rdr_;
+  ///* Lidar Measuemrnt dimension
+  int n_z_ldr_;
+
+
   ///* Sigma point spreading parameter
   double lambda_;
 
+  //mean predicted measurement
+  VectorXd z_pred_rdr_;
+  VectorXd z_pred_ldr_;
+
+
+  //Radar measurement covariance matrix S
+  MatrixXd S_rdr_;
+  //Lidar measurement covariance matrix S
+  MatrixXd S_ldr_;
+
+  double nis_;
 
   /**
    * Constructor
@@ -102,6 +121,48 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+
+private:
+
+  //create sigma point matrix
+   MatrixXd Xsig;;
+
+  //create augmented mean vector
+  VectorXd x_aug;
+
+  //create augmented state covariance
+  MatrixXd P_aug;
+
+  //create sigma point matrix
+  MatrixXd Xsig_aug;
+
+  //create sigma point matrix
+  MatrixXd Xsig_pred;
+
+  //create matrix for sigma points in Radar measurement space
+  MatrixXd Zsig_rdr;
+  MatrixXd Zsig_ldr;
+
+  //create matrix for cross correlation Tc
+  MatrixXd Tc_rdr;
+  MatrixXd Tc_ldr;
+
+  //create vector for incoming radar measurement
+  VectorXd z_rdr;
+  /*
+  *    z <<
+  *    5.9214,   //rho in m
+  *    0.2187,   //phi in rad
+  *    2.0062;   //rho_dot in m/s
+  */
+  //create vector for incoming radar measurement
+  VectorXd z_ldr;
+  //calculate square root of P
+  MatrixXd A_aug;
+  // lambda factor
+  double lambda_fx_aug;
+
 };
 
 #endif /* UKF_H */
