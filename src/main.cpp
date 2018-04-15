@@ -26,7 +26,7 @@ std::string hasData(std::string s) {
   return "";
 }
 
-int main()
+int main(int argc, char* argv[])
 			{
   uWS::Hub h;
 
@@ -37,6 +37,35 @@ int main()
   Tools tools;
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
+  if(argc != 14) {
+        cout << "usage: px, py, v, psi, psid, P1, P2, P3, P4, P5, std_a, std_yawdd, active_sensor" << endl;
+        return 1;
+  }
+  ukf.x_(0) = atof(argv[1]);
+  ukf.x_(1)  = atof(argv[2]);
+  ukf.x_(2) = atof(argv[3]);
+  ukf.x_(3) = atof(argv[4]);
+  ukf.x_(4) = atof(argv[5]);
+  ukf.P_(0,0) = atof(argv[6]);
+  ukf.P_(1,1) = atof(argv[7]);
+  ukf.P_(2,2) = atof(argv[8]);
+  ukf.P_(3,3) = atof(argv[9]);
+  ukf.P_(4,4) = atof(argv[10]);
+  ukf.std_a_ = atof(argv[11]);;
+  ukf.std_yawdd_ = atof(argv[12]);
+  std::string active_sensor = argv[13];
+  if (!active_sensor.compare("radar")) {
+	  ukf.use_laser_ = false;
+	  ukf.use_radar_ = true;
+  }
+  if (!active_sensor.compare("laser")) {
+	  ukf.use_laser_ = true;
+	  ukf.use_radar_ = false;
+  }
+  if (!active_sensor.compare("both")) {
+	  ukf.use_radar_ = true;
+	  ukf.use_laser_ = true;
+  }
 
   h.onMessage([&ukf,&tools,&estimations,&ground_truth](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
@@ -128,6 +157,7 @@ int main()
     	  estimations.push_back(estimate);
 
     	  VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
+    	  cout << RMSE[0] << " " <<  RMSE[1] << " " <<  RMSE[2] << " " <<  RMSE[3] << " " << ukf.nis_ << endl;
 
           json msgJson;
           msgJson["estimate_x"] = p_x;
@@ -166,22 +196,22 @@ int main()
   });
 
   h.onConnection([&h](uWS::WebSocket<uWS::SERVER> ws, uWS::HttpRequest req) {
-    std::cout << "Connected!!!" << std::endl;
+//    std::cout << "Connected!!!" << std::endl;
   });
 
   h.onDisconnection([&h](uWS::WebSocket<uWS::SERVER> ws, int code, char *message, size_t length) {
     ws.close();
-    std::cout << "Disconnected" << std::endl;
+  //  std::cout << "Disconnected" << std::endl;
   });
 
   int port = 4567;
   if (h.listen(port))
   {
-    std::cout << "Listening to port " << port << std::endl;
+  //  std::cout << "Listening to port " << port << std::endl;
   }
   else
   {
-    std::cerr << "Failed to listen to port" << std::endl;
+   // std::cerr << "Failed to listen to port" << std::endl;
     return -1;
   }
   h.run();
