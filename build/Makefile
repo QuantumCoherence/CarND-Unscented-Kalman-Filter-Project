@@ -48,7 +48,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/media/paolo/VERSIONED BOX/EDX Courses/Enrolled/Self Driving Nanodegree Udacity/CarND-Unscented-Kalman-Filter-Project/src"
+CMAKE_SOURCE_DIR = "/media/paolo/VERSIONED BOX/EDX Courses/Enrolled/Self Driving Nanodegree Udacity/CarND-Unscented-Kalman-Filter-Project"
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = "/media/paolo/VERSIONED BOX/EDX Courses/Enrolled/Self Driving Nanodegree Udacity/CarND-Unscented-Kalman-Filter-Project/build"
@@ -123,86 +123,86 @@ UnscentedKF/fast:
 	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/build
 .PHONY : UnscentedKF/fast
 
-main.o: main.cpp.o
+src/main.o: src/main.cpp.o
 
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/main.cpp.s
-.PHONY : main.cpp.s
-
-tools.o: tools.cpp.o
-
-.PHONY : tools.o
+.PHONY : src/main.o
 
 # target to build an object file
-tools.cpp.o:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/tools.cpp.o
-.PHONY : tools.cpp.o
+src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-tools.i: tools.cpp.i
+src/main.i: src/main.cpp.i
 
-.PHONY : tools.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-tools.cpp.i:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/tools.cpp.i
-.PHONY : tools.cpp.i
+src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-tools.s: tools.cpp.s
+src/main.s: src/main.cpp.s
 
-.PHONY : tools.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-tools.cpp.s:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/tools.cpp.s
-.PHONY : tools.cpp.s
+src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
-ukf.o: ukf.cpp.o
+src/tools.o: src/tools.cpp.o
 
-.PHONY : ukf.o
+.PHONY : src/tools.o
 
 # target to build an object file
-ukf.cpp.o:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/ukf.cpp.o
-.PHONY : ukf.cpp.o
+src/tools.cpp.o:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/tools.cpp.o
+.PHONY : src/tools.cpp.o
 
-ukf.i: ukf.cpp.i
+src/tools.i: src/tools.cpp.i
 
-.PHONY : ukf.i
+.PHONY : src/tools.i
 
 # target to preprocess a source file
-ukf.cpp.i:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/ukf.cpp.i
-.PHONY : ukf.cpp.i
+src/tools.cpp.i:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/tools.cpp.i
+.PHONY : src/tools.cpp.i
 
-ukf.s: ukf.cpp.s
+src/tools.s: src/tools.cpp.s
 
-.PHONY : ukf.s
+.PHONY : src/tools.s
 
 # target to generate assembly for a file
-ukf.cpp.s:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/ukf.cpp.s
-.PHONY : ukf.cpp.s
+src/tools.cpp.s:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/tools.cpp.s
+.PHONY : src/tools.cpp.s
+
+src/ukf.o: src/ukf.cpp.o
+
+.PHONY : src/ukf.o
+
+# target to build an object file
+src/ukf.cpp.o:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/ukf.cpp.o
+.PHONY : src/ukf.cpp.o
+
+src/ukf.i: src/ukf.cpp.i
+
+.PHONY : src/ukf.i
+
+# target to preprocess a source file
+src/ukf.cpp.i:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/ukf.cpp.i
+.PHONY : src/ukf.cpp.i
+
+src/ukf.s: src/ukf.cpp.s
+
+.PHONY : src/ukf.s
+
+# target to generate assembly for a file
+src/ukf.cpp.s:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/ukf.cpp.s
+.PHONY : src/ukf.cpp.s
 
 # Help Target
 help:
@@ -213,15 +213,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... UnscentedKF"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... tools.o"
-	@echo "... tools.i"
-	@echo "... tools.s"
-	@echo "... ukf.o"
-	@echo "... ukf.i"
-	@echo "... ukf.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/tools.o"
+	@echo "... src/tools.i"
+	@echo "... src/tools.s"
+	@echo "... src/ukf.o"
+	@echo "... src/ukf.i"
+	@echo "... src/ukf.s"
 .PHONY : help
 
 

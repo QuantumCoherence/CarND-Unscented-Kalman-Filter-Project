@@ -29,7 +29,7 @@ std::string hasData(std::string s) {
 int main(int argc, char* argv[])
 			{
   uWS::Hub h;
-
+  static int print = 0;
   // Create a Kalman Filter instance
   UKF ukf;
 
@@ -37,34 +37,55 @@ int main(int argc, char* argv[])
   Tools tools;
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
-  if(argc != 14) {
-        cout << "usage: px, py, v, psi, psid, P1, P2, P3, P4, P5, std_a, std_yawdd, active_sensor" << endl;
+  if(argc != 15 && argc != 1 ) {
+        cout << "usage: px, py, v, psi, psid, P1, P2, P3, P4, P5, std_a, std_yawdd, active_sensor print" << endl;
         return 1;
-  }
-  ukf.x_(0) = atof(argv[1]);
-  ukf.x_(1)  = atof(argv[2]);
-  ukf.x_(2) = atof(argv[3]);
-  ukf.x_(3) = atof(argv[4]);
-  ukf.x_(4) = atof(argv[5]);
-  ukf.P_(0,0) = atof(argv[6]);
-  ukf.P_(1,1) = atof(argv[7]);
-  ukf.P_(2,2) = atof(argv[8]);
-  ukf.P_(3,3) = atof(argv[9]);
-  ukf.P_(4,4) = atof(argv[10]);
-  ukf.std_a_ = atof(argv[11]);;
-  ukf.std_yawdd_ = atof(argv[12]);
-  std::string active_sensor = argv[13];
-  if (!active_sensor.compare("radar")) {
-	  ukf.use_laser_ = false;
-	  ukf.use_radar_ = true;
-  }
-  if (!active_sensor.compare("laser")) {
-	  ukf.use_laser_ = true;
-	  ukf.use_radar_ = false;
-  }
-  if (!active_sensor.compare("both")) {
+  } else if (argc == 1){ // default
+	  //0.3 0.6 0 0  0  0.2 0.2  0.2  3 3  0.4 0.4 both
+	  ukf.x_(0) = 0.3;
+	  ukf.x_(1) = 0.6;
+	  ukf.x_(2) = 0;
+	  ukf.x_(3) = 0;
+	  ukf.x_(4) = 0;
+	  ukf.P_(0,0) = 0.2;
+	  ukf.P_(1,1) = 0.2;
+	  ukf.P_(2,2) = 0.2;
+	  ukf.P_(3,3) = 3;
+	  ukf.P_(4,4) = 3;
+	  ukf.std_a_ = 0.4;
+	  ukf.std_yawdd_ = 0.4;
 	  ukf.use_radar_ = true;
 	  ukf.use_laser_ = true;
+	  print = 0;
+
+  } else {
+	  ukf.x_(0) = atof(argv[1]);
+	  ukf.x_(1)  = atof(argv[2]);
+	  ukf.x_(2) = atof(argv[3]);
+	  ukf.x_(3) = atof(argv[4]);
+	  ukf.x_(4) = atof(argv[5]);
+	  ukf.P_(0,0) = atof(argv[6]);
+	  ukf.P_(1,1) = atof(argv[7]);
+	  ukf.P_(2,2) = atof(argv[8]);
+	  ukf.P_(3,3) = atof(argv[9]);
+	  ukf.P_(4,4) = atof(argv[10]);
+	  ukf.std_a_ = atof(argv[11]);;
+	  ukf.std_yawdd_ = atof(argv[12]);
+	  std::string active_sensor = argv[13];
+	  if (!active_sensor.compare("radar")) {
+		  ukf.use_laser_ = false;
+		  ukf.use_radar_ = true;
+	  }
+	  if (!active_sensor.compare("laser")) {
+		  ukf.use_laser_ = true;
+		  ukf.use_radar_ = false;
+	  }
+	  if (!active_sensor.compare("both")) {
+		  ukf.use_radar_ = true;
+		  ukf.use_laser_ = true;
+	  }
+	  print = atoi(argv[14]);
+
   }
 
   h.onMessage([&ukf,&tools,&estimations,&ground_truth](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
@@ -157,7 +178,9 @@ int main(int argc, char* argv[])
     	  estimations.push_back(estimate);
 
     	  VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
-    	  cout << RMSE[0] << " " <<  RMSE[1] << " " <<  RMSE[2] << " " <<  RMSE[3] << " " << ukf.nis_ << endl;
+    	  if (print) {
+    		  cout << RMSE[0] << " " <<  RMSE[1] << " " <<  RMSE[2] << " " <<  RMSE[3] << " " << ukf.nis_ << endl;
+    	  }
 
           json msgJson;
           msgJson["estimate_x"] = p_x;
