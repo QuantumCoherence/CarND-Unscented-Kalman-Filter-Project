@@ -41,19 +41,19 @@ int main(int argc, char* argv[])
         cout << "usage: px, py, v, psi, psid, P1, P2, P3, P4, P5, std_a, std_yawdd, active_sensor print" << endl;
         return 1;
   } else if (argc == 1){ // default
-	  //0.3 0.6 0 0  0  0.2 0.2  0.2  3 3  0.4 0.4 both
-	  ukf.x_(0) = 0.3;
-	  ukf.x_(1) = 0.6;
-	  ukf.x_(2) = 0;
-	  ukf.x_(3) = 0;
+	  // 0.312 0.588 5 -0.2 0  0.101 0.011  .231  3 3  0.84  0.6 both 1 >
+	  ukf.x_(0) = 0.312;
+	  ukf.x_(1) = 0.588;
+	  ukf.x_(2) = 5;
+	  ukf.x_(3) = -0.2;
 	  ukf.x_(4) = 0;
-	  ukf.P_(0,0) = 0.2;
-	  ukf.P_(1,1) = 0.2;
-	  ukf.P_(2,2) = 0.2;
+	  ukf.P_(0,0) = 0.101;
+	  ukf.P_(1,1) = 0.011;
+	  ukf.P_(2,2) = 0.231;
 	  ukf.P_(3,3) = 3;
 	  ukf.P_(4,4) = 3;
-	  ukf.std_a_ = 0.4;
-	  ukf.std_yawdd_ = 0.4;
+	  ukf.std_a_ = 0.84;
+	  ukf.std_yawdd_ = 0.55;
 	  ukf.use_radar_ = true;
 	  ukf.use_laser_ = true;
 	  print = 0;

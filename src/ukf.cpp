@@ -124,6 +124,7 @@ UKF::UKF() {
 	  // lambda factor
 	  lambda_fx_aug = sqrt(lambda_+n_aug_);
 	  A_aug = MatrixXd(n_aug_,n_aug_);
+	  x_ << 0,0,0,0,0;
 }
 
 UKF::~UKF() {}
@@ -136,15 +137,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 	/*****************************************************************************
 	*  Initialization
 	****************************************************************************/
-	if (!is_initialized_) {
-
+	if (!is_initialized_ ) {
 	  if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
 		  x_ << meas_package.raw_measurements_[0]*cos(meas_package.raw_measurements_[1]), meas_package.raw_measurements_[0]*sin(meas_package.raw_measurements_[1]), 0, 0.1, 0.1;
 	  } else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
-		  x_ << 3.122427e-01,	5.803398e-01,	5	,0, 0.0;
-		  //this->x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 5	,0;
+		  x_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1], 5, -0.2, 0;
 	  }
-
+	 //cout << x_ << endl;
 	  // done initializing, no need to predict or update
 	  previous_timestamp_ = meas_package.timestamp_;
 	  is_initialized_ = true;
